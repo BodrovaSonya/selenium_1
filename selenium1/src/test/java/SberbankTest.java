@@ -28,20 +28,25 @@ public class SberbankTest {
 
     @Test
     public void testSberbank(){
+        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
         driver.findElement(By.xpath(".//div[@class=\"sbrf-div-list-inner --area bp-area header-container\"]//a[@aria-label=\"Раздел Застраховать себя  и имущество\"]")).click();
+        // //li[5]//*[@class="alt-menu-collapser__area alt-menu-collapser__area_cols_3"]
+        WebElement menu = driver.findElement(By.xpath("//*[@class='sbrf-rich-outer']/h1"));
+        wait.until(ExpectedConditions.visibilityOf(menu));
         driver.findElement(By.xpath(".//div[@class=\"sbrf-div-list-inner --area bp-area header-container\"]//a[contains(text(),'Страхование путешественников')]")).click();
 
         driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
+
         WebElement title = driver.findElement(By.xpath("//*[@class='sbrf-rich-outer']/h1"));
         wait.until(ExpectedConditions.visibilityOf(title));
         Assert.assertEquals("Страхование путешественников",title.getText());
 
         driver.findElement(By.xpath("//a[@href=\"https://online.sberbankins.ru/store/vzr/index.html\"][not(@class)]")).click();
+        driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
         String childHandle = "https://online.sberbankins.ru/store/vzr/index.html";
         driver.switchTo().window(childHandle);
-        driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
+        //driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
 
         driver.findElement(By.xpath("//div[1]/div[@class=\"b-form-prog-box\"]")).click();
         driver.findElement(By.xpath("//span[@class=\"b-button-block-center\"]//*[contains(text(),\"Оформить\")]")).click();
