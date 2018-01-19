@@ -30,12 +30,11 @@ public class SberbankTest {
     @Test
     public void testSberbank(){
         Wait wait = new WebDriverWait(driver, 5, 1000);
-        driver.findElement(By.xpath(".//div[@class=\"sbrf-div-list-inner --area bp-area header-container\"]//a[@aria-label=\"Раздел Застраховать себя  и имущество\"]")).click();
+        //driver.findElement(By.xpath(".//div[@class=\"sbrf-div-list-inner --area bp-area header-container\"]//a[@aria-label=\"Раздел Застраховать себя  и имущество\"]")).click();
+        driver.findElement(By.xpath("//div[contains(@class,'bp-area header-container')]//a[@aria-label='Раздел Застраховать себя  и имущество']")).click();
         WebElement menuItem = driver.findElement(By.xpath("//div[@class=\"sbrf-div-list-inner --area bp-area header-container\"]//a[contains(text(),'Страхование путешественников')]"));
         wait.until(ExpectedConditions.visibilityOf(menuItem));
         driver.findElement(By.xpath("//div[@class=\"sbrf-div-list-inner --area bp-area header-container\"]//a[contains(text(),'Страхование путешественников')]")).click();
-
-        driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
 
 
         WebElement title = driver.findElement(By.xpath("//*[@class='sbrf-rich-outer']/h1"));
@@ -43,7 +42,6 @@ public class SberbankTest {
         Assert.assertEquals("Страхование путешественников",title.getText());
 
         driver.findElement(By.xpath("//img[@src=\"/portalserver/content/atom/contentRepository/content/person/travel/banner-zashita-traveler.jpg?id=f6c836e1-5c5c-4367-b0d0-bbfb96be9c53\"]")).click();
-        driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
         String parentWindow = driver.getWindowHandle();
         Set<String> handles =  driver.getWindowHandles();
         for(String windowHandle  : handles) {
@@ -51,7 +49,7 @@ public class SberbankTest {
                 driver.switchTo().window(windowHandle);
             }
         }
-        driver.manage().timeouts().pageLoadTimeout(60,TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),\"Минимальная\")]"))));
 
         driver.findElement(By.xpath("//*[contains(text(),\"Минимальная\")]")).click();
         driver.findElement(By.xpath("//span[@class=\"b-button-block-center\"]//*[contains(text(),\"Оформить\")]")).click();
